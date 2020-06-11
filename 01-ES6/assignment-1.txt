@@ -1,0 +1,20 @@
+var products = [
+    { id : 5, name : 'Pen', cost : 60, units : 50, category : 'stationary' },
+    { id : 2, name : 'Ten', cost : 30, units : 20, category : 'grocery' },
+    { id : 8, name : 'Den', cost : 80, units : 70, category : 'stationary' },
+    { id : 6, name : 'Zen', cost : 40, units : 60, category : 'grocery' },
+    { id : 1, name : 'Ken', cost : 50, units : 10, category : 'stationary' },
+    { id : 7, name : 'Len', cost : 20, units : 90, category : 'utencil' },
+]
+
+1. find all the stationary products (using the 'filter' method of array)
+
+2. sort the products by id (using the 'sort' method of array)
+
+3. find the first product with 'grocery' category (using the 'find' method)
+
+4. create a new list of products with the value of the product (value is a new attribute where value = cost * units) (using the map method of array)
+
+5. find the highest cost of the products (using the 'reduce' method)
+
+6. find the sum of values of all the products (using the map and reduce methods)
