@@ -7,8 +7,35 @@
     <title>React - Virtual DOM</title>
     <script src="react.development.js"></script>
     <script src="react-dom.development.js"></script>
+    <script>
+        /* 
+            var h1Ele = document.createElement('h1');
+            h1Ele.setAttribute('id', 'header-1');
+            h1Ele.innerText = 'Welcome to React.js!';
+            document.body.appendChild(h1Ele)
+        */
+        var counter = 0;
+        function btnRenderClick(){
+            //render using actual DOM
+            ++counter;
+            document.getElementById('spanCounter').innerText = counter;
+
+            //rendering using react
+            var h1Ele = React.createElement('h1', { id : 'header-1'}, 'Welcome to React.js! - ' + counter);
+            ReactDOM.render(h1Ele, document.getElementById('root'));
+        }
+        function onDocumentLoad(){
+            var btnRender = document.getElementById('btnRender');
+            btnRender.addEventListener('click', btnRenderClick);
+        }
+        window.addEventListener('load', onDocumentLoad);
+    </script>
 </head>
 <body>
-    
+    <input type="button" value="Render" id="btnRender">
+    <div>
+        <span>Counter : </span><span id="spanCounter">0</span>
+    </div>
+    <div id="root"></div>
 </body>
 </html>
