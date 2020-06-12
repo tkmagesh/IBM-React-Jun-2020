@@ -41,6 +41,8 @@
                         <h1>Greeter</h1>
                         <hr/>
                         <label htmlFor="">User Name :</label>
+                        {/* <input type="text" value={this.state.userName} onChange={this.onUserNameChange} /> */}
+                        {/* <input type="text" defaultValue="Type here" onChange={this.onUserNameChange} /> */}
                         <input type="text" onChange={this.onUserNameChange} />
                         <input type="button" value="Greet" onClick={this.onGreetClick}/>
                         <div className="highlight">{this.state.greetMsg}</div>
