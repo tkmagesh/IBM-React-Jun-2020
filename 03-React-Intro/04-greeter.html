@@ -26,7 +26,7 @@
 
             /* behavior */
             onGreetClick = () => {
-                const msg = `Hi ${this.state.userName}, Have a nice day!`;
+                const msg = `Hi ${this.state.userName}, ${this.props.template}`;
                 this.setState({ greetMsg : msg});
             }
 
@@ -49,12 +49,15 @@
             }
         }
         //ReactDOM.render(React.createElement(Greeter), document.getElementById('root'));
-        ReactDOM.render(<Greeter/>
-            , document.getElementById('root'), () => {
-                let endTime = new Date(),
-                    elapsed = endTime - startTime;
-                console.log('time taken = ', elapsed);
-            });
+        var greetTemplate = 'Have a nice day!';
+
+        ReactDOM.render(
+            <div>
+                <Greeter template={greetTemplate}/>
+                <hr/>
+                <Greeter template="Have a good day!"/>
+            </div>
+            , document.getElementById('root'));
     </script>
 
 </head>
