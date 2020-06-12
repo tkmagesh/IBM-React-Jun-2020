@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>React - Virtual DOM</title>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script>
+        
+        var counter = 0;
+        function btnRenderClick(){
+            ++counter;
+            var appEle = React.createElement('div', null, 
+                React.createElement('h1', null, 'Welcome to React.js'),
+                React.createElement('hr'),
+                React.createElement('section', null, 
+                    React.createElement('span', null, 'Counter : '),
+                    React.createElement('span', null, counter)
+                ),
+                React.createElement('section', null, 
+                    React.createElement('h3', null, 'Introduction'),
+                    React.createElement('p', null, 'Duis eiusmod nostrud nulla sunt laboris quis officia voluptate culpa. Adipisicing esse quis sit aliqua enim eiusmod pariatur consectetur exercitation magna eu veniam nisi. Qui anim cillum anim proident aliquip elit culpa amet id ea eu amet aliqua consectetur. Et quis irure anim ut nostrud ullamco dolore do proident mollit ut reprehenderit. Ut fugiat laborum excepteur irure veniam adipisicing ut.'),
+                    React.createElement('p', null, 'Do ad enim pariatur fugiat deserunt proident cillum laborum eiusmod quis. Elit do esse ea eiusmod commodo nisi qui mollit eiusmod tempor excepteur culpa dolor. Id consectetur qui exercitation in exercitation.'),
+                    React.createElement('p', null, 'Exercitation culpa labore excepteur aliqua magna ipsum quis nulla cupidatat consectetur adipisicing et. Incididunt Lorem ad elit aliqua qui reprehenderit ullamco et dolore anim minim proident commodo. Mollit sunt ipsum est magna tempor duis Lorem irure dolore. Dolore ut ut fugiat exercitation aliqua enim non mollit. Cillum amet cupidatat occaecat sint minim id consectetur deserunt voluptate qui laboris laboris laborum. Ut aute officia velit officia magna est laboris ea aliquip amet in sint anim. Laboris id esse dolor ullamco qui excepteur est minim do.'),
+                ),
+                React.createElement('section', null,
+                    React.createElement('h3', null, 'Advantages'),
+                    React.createElement('ul', null, 
+                        React.createElement('li', null, 'Simplicity'),
+                        React.createElement('li', null, 'Declarative'),
+                    ) 
+                )
+            )
+            ReactDOM.render(appEle, document.getElementById('root'));
+        }
+        function onDocumentLoad(){
+            var btnRender = document.getElementById('btnRender');
+            btnRender.addEventListener('click', btnRenderClick);
+        }
+        window.addEventListener('load', onDocumentLoad);
+    </script>
+</head>
+<body>
+    <input type="button" value="Render" id="btnRender">
+    <!-- <div>
+        <span>Counter : </span><span id="spanCounter">0</span>
+    </div> -->
+    <div id="root"></div>
+</body>
+</html>
