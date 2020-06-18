@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>State Manager - demo</title>
+    <script src="state-manager.js"></script>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script src="babel.min.js"></script>
+    <!-- 
+        01. initial implementation
+        02. remove the direct dependency on the store in the component
+        03. remove the responsibility of creating actions from the component
+        04. simplify passing action creators to the component
+        05. creating action dispatchers
+        06. generalizing the creation of action dispatchers in the bindActionCreators
+     -->
+    <script type="text/babel">
+        function spinnerReducer(currentState = 0, action){
+            if (action.type === 'INCREMENT') return currentState + 1;
+            if (action.type === 'DECREMENT') return currentState - 1;
+            return currentState;
+        }
+        var store = StateManager.createStore(spinnerReducer)
+
+        var spinnerActionCreators = { 
+            decrement(){
+                const action = { type : 'DECREMENT'};
+                return action;
+            },
+            increment(){
+                const action = { type : 'INCREMENT'};
+                return action;
+            }
+        }
+
+        //function used to create the action dispatcher for the given action creators
+        function bindActionCreators(actionCreators, dispatch){
+            const actionDispatchers = {};
+            for(let key in actionCreators){
+                actionDispatchers[key] = function(...args){
+                    const action = actionCreators[key](...args);
+                    dispatch(action);
+                }
+            }
+            return actionDispatchers;
+        }
+
+        const actionDispatchers = bindActionCreators(spinnerActionCreators, store.dispatch);
+
+        class Spinner extends React.Component {
+            onDecrementClick = () => {
+                this.props.decrement();
+            }
+            onIncrementClick = () => {
+                this.props.increment();
+            }
+            render = () => {
+                const value = this.props.value;
+                return(
+                    <div>
+                        <h1>Spinner</h1>
+                        <hr/>
+                        <input type="button" value="Decrement" onClick={this.onDecrementClick} />
+                        <span> [ {value} ] </span>
+                        <input type="button" value="Increment" onClick={this.onIncrementClick} />
+                    </div>
+                )
+            }
+        }
+
+        function renderSpinner(){
+            const storeState = store.getState();
+            ReactDOM.render(
+                /* <Spinner value={storeState} 
+                    dispatch={store.dispatch} 
+                    increment={spinnerActionCreators.increment}
+                    decrement={spinnerActionCreators.decrement}
+                />  */
+                /* 
+                <Spinner value={storeState} 
+                    dispatch={store.dispatch} 
+                    {...spinnerActionCreators}
+                />
+                 */
+
+                <Spinner value={storeState} 
+                    dispatch={store.dispatch} 
+                    {...actionDispatchers}
+                />
+
+                , document.getElementById('root'));
+        }
+        renderSpinner();
+        store.subscribe(renderSpinner);
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+    <!-- 
+       
+        store.dispatch({ type : 'INCREMENT' })
+        store.getState()
+        
+        store.dispatch({ type : 'INCREMENT' })
+        store.getState()
+        
+        store.subscribe(() => console.log('current state = ', store.getState()))
+        store.dispatch({ type : 'INCREMENT' })
+
+        store.dispatch({ type : 'DECREMENT' })
+
+        store.dispatch({ type : 'DECREMENT' })
+
+        store.dispatch({ type : 'DECREMENT' })
+
+
+
+     -->
+
+     
+</body>
+</html>
