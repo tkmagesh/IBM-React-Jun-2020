@@ -1,4 +1,4 @@
-
+var StateManager = (function(){
     var _currentState = undefined,
         _callbacks = [],
         _reducer = null;
@@ -21,3 +21,11 @@
         _currentState = newState;
         triggerChange();
     }
+
+    function createStore(){
+        var store = { getState, subscribe, dispatch };
+        return store;
+    }
+
+    return { createStore };
+})();
