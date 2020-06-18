@@ -12,6 +12,8 @@
     <!-- 
         01. initial implementation
         02. remove the direct dependency on the store in the component
+        03. remove the responsibility of creating actions from the component
+        
 
      -->
     <script type="text/babel">
@@ -22,13 +24,24 @@
         }
         var store = StateManager.createStore(spinnerReducer)
 
+        var spinnerActionCreators = { 
+            decrement(){
+                const action = { type : 'DECREMENT'};
+                return action;
+            },
+            increment(){
+                const action = { type : 'INCREMENT'};
+                return action;
+            }
+        }
+
         class Spinner extends React.Component {
             onDecrementClick = () => {
-                const action = { type : 'DECREMENT'};
+                const action = this.props.actionCreators.decrement();
                 this.props.dispatch(action);
             }
             onIncrementClick = () => {
-                const action = { type : 'INCREMENT'};
+                const action = this.props.actionCreators.increment();
                 this.props.dispatch(action);
             }
             render = () => {
@@ -47,7 +60,11 @@
 
         function renderSpinner(){
             const storeState = store.getState();
-            ReactDOM.render(<Spinner value={storeState} dispatch={store.dispatch}/> 
+            ReactDOM.render(
+                <Spinner value={storeState} 
+                    dispatch={store.dispatch} 
+                    actionCreators={spinnerActionCreators}
+                /> 
                 , document.getElementById('root'));
         }
         renderSpinner();
