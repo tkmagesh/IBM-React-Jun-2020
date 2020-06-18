@@ -25,6 +25,7 @@
                 productNames.push(newProductName);
                 this.setState({productNames : productNames, newProductName : ''})
                 this.txtNewProductNameRef.current.focus();
+                this.props.onListChange(productNames);
             }
             render = () => {
                 const { productNames } = this.state;
@@ -55,17 +56,29 @@
                 return(
                      <div>
                         <span>Products Count : </span>
-                        <span> 0 </span>
+                        <span> {this.props.data} </span>
+                    </div>
+                )
+            }
+        }
+
+        class MyApp extends React.Component{
+            state = {
+                list : []
+            }
+            render = () => {
+                return(
+                    <div>
+                        <ProductsCount data={this.state.list.length}/>
+                        <Products onListChange={ list => this.setState({ list : list}) }/>
                     </div>
                 )
             }
         }
 
         ReactDOM.render(
-            <div>
-                <ProductsCount/>
-                <Products/>
-            </div>, document.getElementById('root'));
+            <MyApp/>
+            , document.getElementById('root'));
     </script>
 </head>
 <body>
