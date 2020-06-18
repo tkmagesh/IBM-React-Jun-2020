@@ -11,7 +11,7 @@
     <script src="babel.min.js"></script>
     <!-- 
         01. initial implementation
-
+        02. remove the dependency on the store in the component
 
      -->
     <script type="text/babel">
@@ -25,14 +25,14 @@
         class Spinner extends React.Component {
             onDecrementClick = () => {
                 const action = { type : 'DECREMENT'};
-                this.props.store.dispatch(action);
+                this.props.dispatch(action);
             }
             onIncrementClick = () => {
                 const action = { type : 'INCREMENT'};
-                this.props.store.dispatch(action);
+                this.props.dispatch(action);
             }
             render = () => {
-                const value = this.props.store.getState();
+                const value = this.props.value;
                 return(
                     <div>
                         <h1>Spinner</h1>
@@ -46,7 +46,9 @@
         }
 
         function renderSpinner(){
-            ReactDOM.render(<Spinner store={store}/>, document.getElementById('root'));
+            const storeState = store.getState();
+            ReactDOM.render(<Spinner value={storeState} dispatch={store.dispatch}/> 
+                , document.getElementById('root'));
         }
         renderSpinner();
         store.subscribe(renderSpinner);
