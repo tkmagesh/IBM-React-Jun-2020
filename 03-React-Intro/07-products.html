@@ -51,7 +51,7 @@
             }
         }
 
-        class ProductsCount extends React.Component{
+        /* class ProductsCount extends React.Component{
             render = () => {
                 return(
                      <div>
@@ -60,7 +60,14 @@
                     </div>
                 )
             }
-        }
+        } */
+
+        const ProductsCount = ({data}) =>(
+                <div>
+                <span>Products Count : </span>
+                <span> {data} </span>
+            </div>
+        );
 
         class MyApp extends React.Component{
             state = {
