@@ -30,10 +30,22 @@ var StateManager = (function(){
 
         //to initialize the current state with a valid default state
         _currentState = _reducer(undefined, _init_action)
-        
+
         var store = { getState, subscribe, dispatch };
         return store;
     }
 
-    return { createStore };
+    //function used to create the action dispatcher for the given action creators
+    function bindActionCreators(actionCreators, dispatch) {
+        const actionDispatchers = {};
+        for (let key in actionCreators) {
+            actionDispatchers[key] = function (...args) {
+                const action = actionCreators[key](...args);
+                dispatch(action);
+            }
+        }
+        return actionDispatchers;
+    }
+
+    return { createStore, bindActionCreators };
 })();
