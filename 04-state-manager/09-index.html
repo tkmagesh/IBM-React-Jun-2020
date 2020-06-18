@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>State Manager - demo</title>
+    <script src="state-manager.js"></script>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script src="babel.min.js"></script>
+    <!-- 
+        01. initial implementation
+        02. remove the direct dependency on the store in the component
+        03. remove the responsibility of creating actions from the component
+        04. simplify passing action creators to the component
+        05. creating action dispatchers
+        06. generalizing the creation of action dispatchers in the bindActionCreators
+        07. refactoring the bindActionCreators to state-manager.js 
+        08. converting the Spinner into a functional component
+        09. handling payloads
+     -->
+    <script type="text/babel">
+        function spinnerReducer(currentState = 0, action){
+            if (action.type === 'INCREMENT') return currentState + action.payload;
+            if (action.type === 'DECREMENT') return currentState - action.payload;
+            return currentState;
+        }
+        var store = StateManager.createStore(spinnerReducer)
+
+        var spinnerActionCreators = { 
+            decrement(delta){
+                const action = { type : 'DECREMENT', payload : delta };
+                return action;
+            },
+            increment(delta){
+                const action = { type : 'INCREMENT', payload : delta };
+                return action;
+            }
+        }
+
+        const actionDispatchers = StateManager.bindActionCreators(spinnerActionCreators, store.dispatch);
+
+         
+        class Spinner extends React.Component {
+            state = {
+                delta : 0
+            };
+            onDecrementClick = () => {
+                this.props.decrement(this.state.delta);
+            }
+            onIncrementClick = () => {
+                this.props.increment(this.state.delta);
+            }
+            render = () => {
+                const value = this.props.value;
+                return(
+                    <div>
+                        <h1>Spinner</h1>
+                        <hr/>
+                        <label htmlFor="">Delta : </label>
+                        <input type="number" onChange={ evt => this.setState({delta : evt.target.valueAsNumber}) }/>
+                        <br/>
+                        <input type="button" value="Decrement" onClick={this.onDecrementClick} />
+                        <span> [ {value} ] </span>
+                        <input type="button" value="Increment" onClick={this.onIncrementClick} />
+                    </div>
+                )
+            }
+        }
+
+        //Spinner as a functional component
+        /* const Spinner = ({value, increment, decrement}) => (
+            <div>
+                <h1>Spinner</h1>
+                <hr/>
+                <label htmlFor="">Delta : </label>
+                <input type="number" />
+                <br/>
+                <input type="button" value="Decrement" onClick={decrement} />
+                <span> [ {value} ] </span>
+                <input type="button" value="Increment" onClick={increment} />
+            </div>
+        ); */
+
+        function renderSpinner(){
+            const storeState = store.getState();
+            ReactDOM.render(
+                /* <Spinner value={storeState} 
+                    dispatch={store.dispatch} 
+                    increment={spinnerActionCreators.increment}
+                    decrement={spinnerActionCreators.decrement}
+                />  */
+                /* 
+                <Spinner value={storeState} 
+                    dispatch={store.dispatch} 
+                    {...spinnerActionCreators}
+                />
+                 */
+
+                <Spinner value={storeState} 
+                    dispatch={store.dispatch} 
+                    {...actionDispatchers}
+                />
+
+                , document.getElementById('root'));
+        }
+        renderSpinner();
+        store.subscribe(renderSpinner);
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+    <!-- 
+       
+        store.dispatch({ type : 'INCREMENT' })
+        store.getState()
+        
+        store.dispatch({ type : 'INCREMENT' })
+        store.getState()
+        
+        store.subscribe(() => console.log('current state = ', store.getState()))
+        store.dispatch({ type : 'INCREMENT' })
+
+        store.dispatch({ type : 'DECREMENT' })
+
+        store.dispatch({ type : 'DECREMENT' })
+
+        store.dispatch({ type : 'DECREMENT' })
+
+
+
+     -->
+
+     
+</body>
+</html>
