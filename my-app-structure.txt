@@ -1,0 +1,22 @@
+bug-tracker
+    actions
+        addNew.js
+        toggle.js
+        remove.js
+        removeClosed.js
+        index.js
+    reducers
+        bugsReducer.js
+        index.js
+    views
+        BugStats.js
+        BugSort.js
+        BugEdit.js
+        BugItem.js
+        BugList.js
+    index.js
+        BugTracker
+store
+    index.js
+
+
