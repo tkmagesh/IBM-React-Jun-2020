@@ -61,6 +61,16 @@
                 const newState = [...currentState, action.payload];
                 return newState;
             }
+            if (action.type === 'REMOVE_BUG'){
+                const bugToRemove = action.payload,
+                    newState = currentState.filter(bug => bug.id !== bugToRemove.id);
+                    return newState;
+            }
+            if (action.type === 'UPDATE_BUG'){
+                const updatedBug = action.payload,
+                    newState = currentState.map(bug => bug.id === updatedBug.id ? updatedBug : bug);
+                return newState;
+            }
             return currentState;
         }
 
@@ -75,6 +85,15 @@
                 }
                 const action = { type : 'ADD_NEW_BUG', payload : newBug };
                 return action;  
+            },
+            remove(bug){
+                const action = { type : 'REMOVE_BUG', payload : bug };
+                return action;
+            },
+            toggle(bugToToggle){
+                const toggledBug = { ...bugToToggle, isClosed : !bugToToggle.isClosed };
+                const action = { type : 'UPDATE_BUG', payload : toggledBug };
+                return action;
             }
         }
 
@@ -85,12 +104,14 @@
             };
 
             render = () => {
+                const { bugs, addNew, remove, toggle } = this.props,
+                    closedCount = bugs.reduce((result, bug) => bug.isClosed ? ++result : result, 0);
                 return(
                     <div>
                         <h1>Bug Tracker</h1>
                         <hr/>
                         <section className="stats">
-                            <span className="closed">1</span>
+                            <span className="closed">{closedCount}</span>
                             <span> / </span>
                             <span>{this.props.bugs.length}</span>
                         </section>
@@ -106,22 +127,25 @@
                         <section className="edit">
                             <label htmlFor="">Bug Name :</label>
                             <input type="text" onChange={ evt => this.setState({newBugName : evt.target.value})} />
-                            <input type="button" value="Add New" onClick={ evt => this.props.addNew(this.state.newBugName) } />
+                            <input type="button" value="Add New" onClick={ _ => addNew(this.state.newBugName) } />
                         </section>
                         <section className="list">
                             <ol>
-                                <li>
-                                    <span className="bugname">[This is bug - 1]</span>
-                                    <div className="datetime">[Created At]</div>
-                                    <input type="button" value="Delete"  />
-                                </li>
-                                <li>
-                                    <span className="bugname closed">[This is bug - 2]</span>
-                                    <div className="datetime">[Created At]</div>
-                                    <input type="button" value="Delete" />
-                                </li>
+                                { bugs.map(bug => (
+                                    <li key={bug.id}>
+                                        <span 
+                                            className={'bugname' + ( bug.isClosed ? ' closed' : '')}
+                                            onClick={ _ => toggle(bug)}
+                                        >
+                                            {bug.name}
+                                        </span>
+                                        <div className="datetime">{bug.createdAt.toString()}</div>
+                                        <input type="button" value="Delete" onClick={ _ => remove(bug)} />
+                                    </li>
+                                    )) 
+                                }
                             </ol>
-                            <input type="button" value="Remove Closed" />
+                            { bugs.length === 0 ? null : (<input type="button" value="Remove Closed" />) }
                         </section>
                     </div>
                 )
