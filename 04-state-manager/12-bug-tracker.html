@@ -58,8 +58,8 @@
 
         function bugsReducer(currentState = [], action){
             if (action.type === 'ADD_NEW_BUG'){
-                currentState.push(action.payload);
-                return currentState;
+                const newState = [...currentState, action.payload];
+                return newState;
             }
             return currentState;
         }
