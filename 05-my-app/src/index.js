@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { bindActionCreators } from 'redux';
+import { Provider } from 'react-redux';
 
 import './index.css';
 //import App from './App';
@@ -17,19 +18,33 @@ import appStore from './store';
 import Spinner from './spinner';
 import BugTracker from './bug-tracker'
 
+//rendering the connected component
+
+ReactDOM.render(
+  <Provider store={appStore}>
+    <div>
+      <Spinner/>
+      <BugTracker/>
+    </div>
+  </Provider>
+  , document.getElementById('root'));
+
+/* 
 import spinnerActionCreators from './spinner/actions';
 import bugActionCreators from './bug-tracker/actions';
 
-
+//creating action dispatchers using the store.dispatch
 const spinnerActionDispatchers = bindActionCreators(spinnerActionCreators, appStore.dispatch);
 const bugActionDispatchers = bindActionCreators(bugActionCreators, appStore.dispatch);
 
 function renderSpinner() {
 
+  //extracting data from the storeState
     const storeState = appStore.getState(),
           spinnerValue = storeState.spinnerData,
           bugs = storeState.bugsData;
 
+    //rendering the component
     ReactDOM.render(
       <div>
         <Spinner value={spinnerValue} {...spinnerActionDispatchers}/>
@@ -39,6 +54,7 @@ function renderSpinner() {
 }
 renderSpinner();
 appStore.subscribe(renderSpinner);
+ */
 
 /* 
 
