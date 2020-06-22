@@ -1,14 +1,19 @@
-let currentBugId = 0;
+import bugApi from '../services/bugApi';
 
 function addNew(newBugName){
-    const newBug = {
-        id: ++currentBugId,
+    const newBugData = {
+        id: 0,
         name: newBugName,
         isClosed: false,
         createdAt: new Date()
     }
-    const action = { type: 'ADD_NEW_BUG', payload: newBug };
-    return action;
+    return bugApi
+        .save(newBugData)
+        .then(newBug => {
+            const action = { type: 'ADD_NEW_BUG', payload: newBug };
+            return action;
+        });
+    
 }
 
 export default addNew;

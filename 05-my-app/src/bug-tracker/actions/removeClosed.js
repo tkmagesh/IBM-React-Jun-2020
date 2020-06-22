@@ -1,7 +1,18 @@
+import remove from './remove';
+
 function removeClosed(bugs) {
-    const openBugs = bugs.filter(bug => !bug.isClosed);
-    const action = { type: 'REPLACE_BUGS', payload: openBugs };
-    return action;
+    return function(dispatch){
+        const closedBugs = bugs.filter(bug => bug.isClosed);
+        const closedBugsRemoveReqs = closedBugs.map(closedBug => remove(closedBug));
+        Promise
+            .all(closedBugsRemoveReqs)
+            .then(() => {
+                closedBugs.forEach(closedBug => {
+                    const action = { type : 'REMOVE_BUG', payload : closedBug };
+                    dispatch(action);
+                })
+            });
+    }
 }
 
 export default removeClosed;
