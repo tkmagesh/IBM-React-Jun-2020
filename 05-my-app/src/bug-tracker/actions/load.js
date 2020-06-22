@@ -28,10 +28,20 @@ function getLocalBugs(){
     ];
 }
 
+function getRemoteBugs(){
+    return axios
+        .get('http://localhost:3030/bugs')
+        .then(response => response.data)       
+}
+
 function load(){
-    //const bugs = getLocalBugs();
-    const action = { type : 'INIT_BUGS', payload : bugs};
-    return action;
+    return function(dispatch){
+        const p = getRemoteBugs();
+        p.then(function(bugs){
+            const action = { type: 'INIT_BUGS', payload: bugs };
+            dispatch(action);
+        });
+    }
 }
 
 export default load;
