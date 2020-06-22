@@ -24,7 +24,8 @@ const BugTracker = ({ bugs, addNew, remove, toggle, removeClosed }) => (
 
 //extracting data from the storeState
 function mapStateToProps(storeState) {
-    const bugs = storeState.bugsData;
+    const { spinnerData, bugsData } = storeState;
+    const bugs = bugsData.filter(bug => bug.id % 2 === spinnerData % 2);
     return { bugs: bugs };
 }
 
