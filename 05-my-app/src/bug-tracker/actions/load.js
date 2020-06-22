@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 import bugApi from '../services/bugApi';
 
 /* 

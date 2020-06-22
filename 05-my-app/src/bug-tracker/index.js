@@ -11,7 +11,7 @@ import BugList from './views/BugList';
 
 import bugActionCreators from './actions';
 
-const BugTracker = ({ bugs, addNew, remove, toggle, removeClosed, load }) => (
+/* const BugTracker = ({ bugs, addNew, remove, toggle, removeClosed, load }) => (
     <div>
         <h3>Bug Tracker</h3>
         <hr />
@@ -21,7 +21,32 @@ const BugTracker = ({ bugs, addNew, remove, toggle, removeClosed, load }) => (
         <BugEdit addNew={addNew} />
         <BugList {...{ bugs, toggle, remove, removeClosed }} />
     </div>
-);
+); */
+
+class BugTracker extends React.Component{
+    componentDidMount = () => {
+        this.props.load();
+    }
+    componentWillUnmount = () => {
+
+    }
+    componentWillUpdate = () => {
+        
+    }
+    render = () => {
+        const { bugs, addNew, remove, toggle, removeClosed } = this.props;
+        return (
+            <div>
+                <h3>Bug Tracker</h3>
+                <hr />
+                <BugStats bugs={bugs} />
+                <BugSort />
+                <BugEdit addNew={addNew} />
+                <BugList {...{ bugs, toggle, remove, removeClosed }} />
+            </div>
+        );
+    }
+}
 
 //extracting data from the storeState
 function mapStateToProps(storeState) {
