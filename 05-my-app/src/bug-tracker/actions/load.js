@@ -1,11 +1,12 @@
 import axios from 'axios';
+import bugApi from '../services/bugApi';
 
 /* 
     axios.get('http://localhost:3030/bugs')
         .then(response => response.data)
         .then(bugs => ....)
 */
-function getLocalBugs(){
+/* function getLocalBugs(){
     return [
         {
             "id": 1,
@@ -32,16 +33,33 @@ function getRemoteBugs(){
     return axios
         .get('http://localhost:3030/bugs')
         .then(response => response.data)       
-}
+} */
 
-function load(){
+//using the asyncMiddleware
+ function load(){
     return function(dispatch){
-        const p = getRemoteBugs();
+        /* const p = getRemoteBugs();
         p.then(function(bugs){
             const action = { type: 'INIT_BUGS', payload: bugs };
             dispatch(action);
-        });
+        }); */
+
+        bugApi
+            .getAll()
+            .then(bugs => {
+                const action = { type: 'INIT_BUGS', payload: bugs };
+                dispatch(action);
+            });
     }
-}
+} 
+
+//using the promiseMiddleware
+/* function load(){
+    return getRemoteBugs()
+        .then(bugs => {
+            const action = { type : 'INIT_BUGS', payload: bugs };
+            return action;
+        })
+} */
 
 export default load;
