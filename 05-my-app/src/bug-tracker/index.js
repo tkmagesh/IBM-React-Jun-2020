@@ -13,7 +13,7 @@ import bugActionCreators from './actions';
 
 const BugTracker = ({ bugs, addNew, remove, toggle, removeClosed }) => (
     <div>
-        <h1>Bug Tracker</h1>
+        <h3>Bug Tracker</h3>
         <hr />
         <BugStats bugs={bugs} />
         <BugSort />

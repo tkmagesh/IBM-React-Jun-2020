@@ -17,7 +17,7 @@ class Spinner extends React.Component {
         const value = this.props.value;
         return (
             <div>
-                <h1>Spinner</h1>
+                <h3>Spinner</h3>
                 <hr />
                 <label htmlFor="">Delta : </label>
                 <input type="number" onChange={evt => this.setState({ delta: evt.target.valueAsNumber })} />

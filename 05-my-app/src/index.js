@@ -3,14 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import './index.css';
-//import App from './App';
 import * as serviceWorker from './serviceWorker';
-
-//import * as calculator from './calculator'
-//import { add } from './calculator';
-
-//importing the default exported object
-//import calculator from './calculator';
 
 import appStore from './store';
 
@@ -22,6 +15,11 @@ import BugTracker from './bug-tracker'
 ReactDOM.render(
   <Provider store={appStore}>
     <div>
+      <h1>My App</h1>
+      <hr/>
+      <label>Apply Filter :</label>
+      <input type="checkbox" />
+      <hr/>      
       <Spinner/>
       <BugTracker/>
     </div>
