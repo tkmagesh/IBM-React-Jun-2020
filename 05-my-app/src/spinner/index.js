@@ -2,10 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import spinnerActionCreators from './actions';
+import BugTracker from '../bug-tracker'
+import {
+    Redirect
+} from "react-router-dom";
 
 class Spinner extends React.Component {
     state = {
-        delta: 0
+        delta: 0,
+        gotoBugs : false
     };
     onDecrementClick = () => {
         this.props.decrement(this.state.delta);
@@ -13,8 +18,16 @@ class Spinner extends React.Component {
     onIncrementClick = () => {
         this.props.increment(this.state.delta);
     }
+    onGoToBugsClick = () => {
+        this.setState({ gotoBugs: true });
+    }
     render = () => {
         const value = this.props.value;
+        if (this.state.gotoBugs){
+            return (
+                <Redirect to="/bugs" />
+            );
+        }
         return (
             <div>
                 <h3>Spinner</h3>
@@ -25,6 +38,8 @@ class Spinner extends React.Component {
                 <input type="button" value="Decrement" onClick={this.onDecrementClick} />
                 <span> [ {value} ] </span>
                 <input type="button" value="Increment" onClick={this.onIncrementClick} />
+                <br/>
+                <input type="button" value="GO TO BUGS" onClick={this.onGoToBugsClick} />
             </div>
         )
     }
