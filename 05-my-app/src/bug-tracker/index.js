@@ -11,10 +11,11 @@ import BugList from './views/BugList';
 
 import bugActionCreators from './actions';
 
-const BugTracker = ({ bugs, addNew, remove, toggle, removeClosed }) => (
+const BugTracker = ({ bugs, addNew, remove, toggle, removeClosed, load }) => (
     <div>
         <h3>Bug Tracker</h3>
         <hr />
+        <input type="button" value="LOAD BUGS" onClick={load} />
         <BugStats bugs={bugs} />
         <BugSort />
         <BugEdit addNew={addNew} />
@@ -24,8 +25,9 @@ const BugTracker = ({ bugs, addNew, remove, toggle, removeClosed }) => (
 
 //extracting data from the storeState
 function mapStateToProps(storeState) {
-    const { spinnerData, bugsData } = storeState;
-    const bugs = bugsData.filter(bug => bug.id % 2 === spinnerData % 2);
+    /* const { spinnerData, bugsData } = storeState;
+    const bugs = bugsData.filter(bug => bug.id % 2 === spinnerData % 2); */
+    const bugs = storeState.bugsData;
     return { bugs: bugs };
 }
 

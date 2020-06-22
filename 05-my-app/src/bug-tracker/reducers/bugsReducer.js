@@ -16,6 +16,9 @@ function bugsReducer(currentState = [], action) {
     if (action.type === 'REPLACE_BUGS') {
         return action.payload;
     }
+    if (action.type === 'INIT_BUGS'){
+        return action.payload;
+    }
     return currentState;
 }
 export default bugsReducer;
