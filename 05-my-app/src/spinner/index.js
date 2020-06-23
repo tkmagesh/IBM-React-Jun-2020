@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import spinnerActionCreators from './actions';
-import BugTracker from '../bug-tracker'
 import {
     Redirect
 } from "react-router-dom";
 
-class Spinner extends React.Component {
+/* class Spinner extends React.Component {
     state = {
         delta: 0,
         gotoBugs : false
@@ -43,6 +42,22 @@ class Spinner extends React.Component {
             </div>
         )
     }
+} */
+
+const Spinner = ({value, increment, decrement}) => {
+    const [delta, setDelta] = useState(0);
+    return (
+        <div>
+            <h3>Spinner</h3>
+            <hr />
+            <label htmlFor="">Delta : </label>
+            <input type="number" value={delta} onChange={evt => setDelta(evt.target.valueAsNumber)} />
+            <br />
+            <input type="button" value="Decrement" onClick={() => decrement(delta)} />
+            <span> [ {value} ] </span>
+            <input type="button" value="Increment" onClick={() => increment(delta)} />
+        </div>
+    )
 }
 
 //extracting data from the storeState
