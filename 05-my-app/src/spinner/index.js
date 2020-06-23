@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import spinnerActionCreators from './actions';
@@ -46,6 +46,17 @@ import {
 
 const Spinner = ({value, increment, decrement}) => {
     const [delta, setDelta] = useState(0);
+    const [counter, setCounter] = useState(0);
+    useEffect(() => {
+        console.log('Spinner is mounted with counter = ', counter);
+        return () => {
+            console.log('Spinner is unmounted');
+        }
+    },[counter]);
+    const onIncrementClick = () => {
+        increment(delta);
+        setCounter(counter + 1);
+    }
     return (
         <div>
             <h3>Spinner</h3>
@@ -55,7 +66,7 @@ const Spinner = ({value, increment, decrement}) => {
             <br />
             <input type="button" value="Decrement" onClick={() => decrement(delta)} />
             <span> [ {value} ] </span>
-            <input type="button" value="Increment" onClick={() => increment(delta)} />
+            <input type="button" value="Increment" onClick={onIncrementClick} />
         </div>
     )
 }
