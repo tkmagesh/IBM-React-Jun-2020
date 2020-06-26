@@ -35,15 +35,16 @@ function getRemoteBugs(){
         .then(response => response.data)       
 } */
 
-//using the asyncMiddleware
- function load(){
-    return function(dispatch){
-        /* const p = getRemoteBugs();
+/* const p = getRemoteBugs();
         p.then(function(bugs){
             const action = { type: 'INIT_BUGS', payload: bugs };
             dispatch(action);
         }); */
 
+
+//using the asyncMiddleware
+ /* function load(){
+    return function(dispatch){
         bugApi
             .getAll()
             .then(bugs => {
@@ -51,7 +52,16 @@ function getRemoteBugs(){
                 dispatch(action);
             });
     }
-} 
+}  */
+
+//using async await 
+function load() {
+    return async function (dispatch) {
+        const bugs = await bugApi.getAll()
+        const action = { type: 'INIT_BUGS', payload: bugs };
+        dispatch(action);
+    }
+}
 
 //using the promiseMiddleware
 /* function load(){

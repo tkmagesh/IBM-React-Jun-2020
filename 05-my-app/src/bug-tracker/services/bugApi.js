@@ -1,9 +1,13 @@
 import axios from 'axios';
 const serviceEndpoint = 'http://localhost:3030/bugs';
 
-function getAll(){
-    return axios.get(serviceEndpoint)
-        .then(response => response.data);
+async function getAll(){
+    var response = await axios.get(serviceEndpoint);
+    return response.data;
+
+    /* var p = axios.get(serviceEndpoint);
+    var p2 = p.then(response => response.data);
+    return p2; */
 }
 
 function getById(id){

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -10,6 +10,7 @@ import BugEdit from './views/BugEdit';
 import BugList from './views/BugList';
 
 import bugActionCreators from './actions';
+import load from './actions/load';
 
 /* const BugTracker = ({ bugs, addNew, remove, toggle, removeClosed, load }) => (
     <div>
@@ -23,7 +24,7 @@ import bugActionCreators from './actions';
     </div>
 ); */
 
-class BugTracker extends React.Component{
+/* class BugTracker extends React.Component{
     componentDidMount = () => {
         this.props.load();
     }
@@ -46,7 +47,24 @@ class BugTracker extends React.Component{
             </div>
         );
     }
-}
+} */
+
+const BugTracker = ({ bugs, addNew, remove, toggle, removeClosed, load }) => {
+    useEffect(()=> {
+        load();
+    },[]);
+    return (
+        <div>
+            <h3>Bug Tracker</h3>
+            <hr />
+            <BugStats bugs={bugs} />
+            <BugSort />
+            <BugEdit addNew={addNew} />
+            <BugList {...{ bugs, toggle, remove, removeClosed }} />
+        </div>
+    );
+};
+
 
 //extracting data from the storeState
 function mapStateToProps(storeState) {
