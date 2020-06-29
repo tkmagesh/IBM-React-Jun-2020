@@ -49,7 +49,7 @@ import load from './actions/load';
     }
 } */
 
-const BugTracker = ({ bugs, addNew, remove, toggle, removeClosed, load }) => {
+const BugTracker = ({ bugs, addNew, remove, toggle, removeClosed, load, sort }) => {
     useEffect(()=> {
         load();
     },[]);
@@ -58,20 +58,38 @@ const BugTracker = ({ bugs, addNew, remove, toggle, removeClosed, load }) => {
             <h3>Bug Tracker</h3>
             <hr />
             <BugStats bugs={bugs} />
-            <BugSort />
+            <BugSort sort={sort}/>
             <BugEdit addNew={addNew} />
             <BugList {...{ bugs, toggle, remove, removeClosed }} />
         </div>
     );
 };
 
+function getComparer(attr, isDesc){
+    const comparer = function(p1, p2){
+        if (p1[attr] < p2[attr]) return -1;
+        if (p1[attr] > p2[attr]) return 1;
+        return 0;
+    }
+    if (isDesc){
+        return function(p1, p2){
+            return comparer(p1, p2) * -1;
+        }
+    }
+    return comparer;
+}
+
+
 
 //extracting data from the storeState
 function mapStateToProps(storeState) {
     /* const { spinnerData, bugsData } = storeState;
     const bugs = bugsData.filter(bug => bug.id % 2 === spinnerData % 2); */
-    const bugs = storeState.bugsData;
-    return { bugs: bugs };
+    const {bugsData} = storeState,
+        {bugs, sortAttr, isDesc} = bugsData;
+
+    const sortedBugs = bugs.sort(getComparer(sortAttr, isDesc));
+    return { bugs: [...sortedBugs] };
 }
 
 //creating action dispatchers using the store.dispatch

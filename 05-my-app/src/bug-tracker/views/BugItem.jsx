@@ -2,6 +2,7 @@ import React from 'react';
 
 const BugItem = ({ bug, remove, toggle }) => (
     <li>
+        <div>Id : {bug.id}</div>
         <span
             className={'bugname' + (bug.isClosed ? ' closed' : '')}
             onClick={_ => toggle(bug)}

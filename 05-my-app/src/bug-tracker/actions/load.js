@@ -57,9 +57,13 @@ function getRemoteBugs(){
 //using async await 
 function load() {
     return async function (dispatch) {
-        const bugs = await bugApi.getAll()
-        const action = { type: 'INIT_BUGS', payload: bugs };
-        dispatch(action);
+        try {
+            const bugs = await bugApi.getAll()
+            const action = { type: 'INIT_BUGS', payload: bugs };
+            dispatch(action);
+        } catch (err){
+            dispatch({ type : 'ERROR', payload : 'Unable to load the bugs!'});
+        }
     }
 }
 

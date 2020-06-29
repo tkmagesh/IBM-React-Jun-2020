@@ -1,22 +1,28 @@
 {
   "bugs": [
     {
-      "id": 2,
-      "name": "User actions not recognized",
+      "id": 1,
+      "name": "User actions not recognised",
       "isClosed": false,
-      "createdAt": "2020-06-22T11:24:26.105Z"
+      "createdAt": "2020-06-29T09:01:18.609Z"
+    },
+    {
+      "id": 2,
+      "name": "Application not responding",
+      "isClosed": false,
+      "createdAt": "2020-06-29T09:01:23.559Z"
     },
     {
       "id": 3,
-      "name": "Application not responding",
-      "isClosed": false,
-      "createdAt": "2020-06-22T11:24:33.047Z"
+      "name": "Server communication failure",
+      "isClosed": true,
+      "createdAt": "2020-06-29T09:01:27.705Z"
     },
     {
       "id": 4,
-      "name": "safjdsfjklads;fa",
-      "isClosed": false,
-      "createdAt": "2020-06-23T06:04:46.865Z"
+      "name": "Data integrity checks failed",
+      "isClosed": true,
+      "createdAt": "2020-06-29T09:01:34.803Z"
     }
   ],
   "projects": [
